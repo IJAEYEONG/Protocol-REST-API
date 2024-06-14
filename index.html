@@ -14,28 +14,25 @@
       const language=`ko-kr`;
       const startPate=0;
       const maxPage=500;
-      const xhr =new XMLHttpRequest();
-      const reqMethod ="GET";
-      function test(pageTest){
-        const requestUrl =`${BaseUrl}?api_key=${Api_key}&language=${language}&page=${pageTest}`
+      const root =document.getElementById('root')
+      function test(page){
+        const xhr =new XMLHttpRequest();
+        const reqMethod ="GET";
+        const requestUrl =`${BaseUrl}?api_key=${Api_key}&language=${language}&page=${page}`
         console.log(requestUrl)
         xhr.open(reqMethod,requestUrl,true)
-        xhr.addEventListener('load',()=>{
+        xhr.onload =function(){
           if(xhr.status===200){
             const result =JSON.parse(xhr.responseText)
-            const root =document.getElementById('root')
-            let list =[];
             result.results.forEach(element => {
-              list.push(`<li>제목:${element.title}<br><img src="https://image.tmdb.org/t/p/w500/${element.poster_path}}"><br>내용:${element.overview}`)
-                root.innerHTML=`<ul>${list.join('')}</ul>`
               });
-            }if(pageTest<maxPage){
-              test(pageTest+1)
-              console.log(pageTest)
+            }if(page<maxPage){
+              test(page+1)
+              console.log(page)
             }else{
               console.error('에러')
             }
-          });
+          };
           xhr.send();
         }
       test(startPate)
