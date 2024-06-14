@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    
 </head>
 <body>
     <div id="root"></div>
@@ -21,15 +22,17 @@
         xhr.send();
         xhr.addEventListener('load',()=>{
           if(xhr.status===200){
-            console.log('200성공')
             const result =JSON.parse(xhr.responseText)
             console.dir(typeof(result))
             console.dir(result)
             const root =document.getElementById('root')
              let list =[];
              result.results.forEach(element => {
-              console.log(element)
+              list.push(`<li>제목:${element.title}<br><img src="" alt=""><br>내용:${element.overview}`)
+                root.innerHTML=`<ul>${list.join('')}</ul>`
              });
+          }else{
+            console.error('에러')
           }
         })
       }
