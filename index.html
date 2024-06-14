@@ -8,11 +8,27 @@
 <body>
     <div id="root"></div>
     <script>
+      const BaseUrl =`https://api.themoviedb.org/3/movie/popular`;
+      const Api_key=`10ad75c569818326a7686e6984c4d996`;
+      const language=`ko-kr`;
+      const maxPage=2;
       const xhr =new XMLHttpRequest();
       const reqMethod ="GET";
-
-      const requestUrl =`https://api.themoviedb.org/3/movie/popular?api_key=10ad75c569818326a7686e6984c4d996&language=ko-kr&page=1`
-      console.log(requestUrl)
+      for(let page =0; page< maxPage; page++){
+        const requestUrl =`${BaseUrl}?api_key=${Api_key}&language=${language}&page=1`
+        console.log(requestUrl)
+        xhr.open(reqMethod,requestUrl,true)
+        xhr.send();
+        xhr.addEventListener('load',()=>{
+          if(xhr.status===200){
+            console.log('200성공')
+            const result =JSON.parse(xhr.responseText)
+            console.dir(typeof(result))
+            console.dir(result)
+          }
+        })
+      }
+      // console.log(requestUrl)
     </script>
 </body>
 </html>
