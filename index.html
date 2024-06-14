@@ -12,32 +12,33 @@
       const BaseUrl =`https://api.themoviedb.org/3/movie/popular`;
       const Api_key=`10ad75c569818326a7686e6984c4d996`;
       const language=`ko-kr`;
-      const startPate=1;
+      const startPate=0;
       const maxPage=500;
       const xhr =new XMLHttpRequest();
       const reqMethod ="GET";
-      for(let page =startPate; page<=maxPage; page++){
-        const requestUrl =`${BaseUrl}?api_key=${Api_key}&language=${language}&page=${page}`
+      function test(pageTest){
+        const requestUrl =`${BaseUrl}?api_key=${Api_key}&language=${language}&page=${pageTest}`
         console.log(requestUrl)
         xhr.open(reqMethod,requestUrl,true)
         xhr.addEventListener('load',()=>{
           if(xhr.status===200){
             const result =JSON.parse(xhr.responseText)
-            console.dir(typeof(result))
-            console.dir(result)
             const root =document.getElementById('root')
-             let list =[];
-             result.results.forEach(element => {
+            let list =[];
+            result.results.forEach(element => {
               list.push(`<li>제목:${element.title}<br><img src="https://image.tmdb.org/t/p/w500/${element.poster_path}}"><br>내용:${element.overview}`)
                 root.innerHTML=`<ul>${list.join('')}</ul>`
-             });
-          }else{
-            console.error('에러')
-          }
-        });
-        xhr.send();
-      }
-      // console.log(requestUrl)
+              });
+            }if(pageTest<maxPage){
+              test(pageTest+1)
+              console.log(pageTest)
+            }else{
+              console.error('에러')
+            }
+          });
+          xhr.send();
+        }
+      test(startPate)
     </script>
 </body>
 </html>
