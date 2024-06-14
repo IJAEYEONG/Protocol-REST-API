@@ -17,9 +17,9 @@
             const result =JSON.parse(xhr.responseText)
             let list =[];
             result.results.forEach(element => {
-              list.push(`<li>제목:${element.title}<br><img src="https://image.tmdb.org/t/p/w500/${element.poster_path}}"><br>내용:${element.overview}`)
-                root.innerHTML+=`<ul>${list.join('')}</ul>`
-              });
+              list.push(`<li>제목:${element.title}<br><img src="https://image.tmdb.org/t/p/w500/${element.poster_path}}"><br>내용:${element.overview}</li>`)
+            });
+            root.innerHTML+=`<ul>${list.join('')}</ul>`
             }if(page<maxPage){
               test(page+1)
               console.log(page)
