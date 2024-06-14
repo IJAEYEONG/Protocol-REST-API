@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        const API_Key = `keDMS8tqwSfvCjrnelw3qCvELRsxBfK9I824cpbyAZg386Vilu9FmNTnvNOcFFPIOeHUlavPAtkhKR5VIp%2BvRg%3D%3D&`;
+const xhr = new XMLHttpRequest();
+const requestMethod = "GET";
+
+const requestUrl = `https://apis.data.go.kr/6300000/eventDataService/eventDataListJson?serviceKey=${API_Key}&numOfRows=10&pageNo=1`;
+console.log(requestUrl);
+
+xhr.open(requestMethod, requestUrl, true);
+xhr.send();
+
+xhr.addEventListener('load', () => {
+    if (xhr.status === 200) {
+        console.log("200 성공");
+        const response = JSON.parse(xhr.responseText);
+        console.log(response); // 응답 확인
+
+        if (response.msgBody) {
+            const events = response.msgBody;
+            const root = document.getElementById('root');
+            let lists = [];
+
+            events.forEach(event => {
+                lists.push(`<li><strong>제목:</strong> ${event.title}<br><strong>시간:</strong> ${event.dataStnDt}</li>`);
+            });
+
+            root.innerHTML = `<ul>${lists.join('')}</ul>`;
+        } else {
+            console.error("응답에서 이벤트 목록을 찾을 수 없습니다.");
+        }
+    } else {
+        console.error("문제가 있습니다.");
+    }
+});
+
+    </script>
+</body>
+</html>
