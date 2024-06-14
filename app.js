@@ -2,7 +2,7 @@
       const BaseUrl =`https://api.themoviedb.org/3/movie/popular`;
       const Api_key=`10ad75c569818326a7686e6984c4d996`;
       const language=`ko-kr`;
-      const startPate=0;
+      const startPate=1;
       const maxPage=500;
       const root =document.getElementById('root')
 
