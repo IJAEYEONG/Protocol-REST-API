@@ -12,11 +12,12 @@
       const BaseUrl =`https://api.themoviedb.org/3/movie/popular`;
       const Api_key=`10ad75c569818326a7686e6984c4d996`;
       const language=`ko-kr`;
-      const maxPage=2;
+      const startPate=1;
+      const maxPage=500;
       const xhr =new XMLHttpRequest();
       const reqMethod ="GET";
-      for(let page =0; page< maxPage; page++){
-        const requestUrl =`${BaseUrl}?api_key=${Api_key}&language=${language}&page=1`
+      for(let page =startPate; page<=maxPage; page++){
+        const requestUrl =`${BaseUrl}?api_key=${Api_key}&language=${language}&page=${page}`
         console.log(requestUrl)
         xhr.open(reqMethod,requestUrl,true)
         xhr.send();
@@ -28,7 +29,7 @@
             const root =document.getElementById('root')
              let list =[];
              result.results.forEach(element => {
-              list.push(`<li>제목:${element.title}<br><img src="" alt=""><br>내용:${element.overview}`)
+              list.push(`<li>제목:${element.title}<br><img src="https://image.tmdb.org/t/p/w500/${element.poster_path}}">내용:${element.overview}`)
                 root.innerHTML=`<ul>${list.join('')}</ul>`
              });
           }else{
