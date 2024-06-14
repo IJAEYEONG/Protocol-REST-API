@@ -20,7 +20,6 @@
         const requestUrl =`${BaseUrl}?api_key=${Api_key}&language=${language}&page=${page}`
         console.log(requestUrl)
         xhr.open(reqMethod,requestUrl,true)
-        xhr.send();
         xhr.addEventListener('load',()=>{
           if(xhr.status===200){
             const result =JSON.parse(xhr.responseText)
@@ -35,7 +34,8 @@
           }else{
             console.error('에러')
           }
-        })
+        });
+        xhr.send();
       }
       // console.log(requestUrl)
     </script>
