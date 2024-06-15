@@ -1,17 +1,19 @@
-const express = require('express')
-const app = express()
+const express = require('express');
+const path = require('path');
+const app = express();
 
-app.use(express.static('public'))
+// 정적 파일 서빙
+app.use(express.static('public'));
 
-app.get('/', function(req, res) {
-  res.sendFile(__dirname + '/index.html')// dirname 으로 index.html을 불르는 부분
-})
-app.get('/style.css', function(req, res) {// dirname 으로 style.css을 불르는 부분
-  res.sendFile(__dirname + '/style.css')
-})
-app.get('/app.js', function(req, res) {// dirname 으로 app.js을 불르는 부분
-  res.sendFile(__dirname + '/app.js')
-})
-app.listen(3000, function() {
-  console.log("start! express server on port http://localhost:3000/")
-})
+// 라우팅 모듈 추가
+const staticRouter = require('./public/js/module/static.js');
+
+// 모든 요청에 대해 staticRouter를 사용
+app.use('/', staticRouter);
+
+const PORT = 3000;
+app.listen(PORT, () => {
+  console.log(`Express 서버가 http://localhost:${PORT}/ 에서 실행 중입니다.`);
+});
+
+module.exports = app;

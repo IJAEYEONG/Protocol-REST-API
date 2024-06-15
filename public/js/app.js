@@ -16,7 +16,7 @@
               const result =JSON.parse(xhr.responseText)
               let list =[];// list라는 배열을 초기화
               result.results.forEach(element => {// list 배열 을 초기화해서 배열초기화 하는 부분에 push로 넣는 부분.
-                list.push(`<li><img src="https://image.tmdb.org/t/p/w500/${element.poster_path}}"><br>제목:${element.title}<br>내용:${element.overview}</li>`)
+                list.push(`<li><img src="https://image.tmdb.org/t/p/w500/${element.backdrop_path}}"><br>제목:${element.title}<br>내용:${element.overview}</li>`)
               });
               root.innerHTML+=`<ul>${list.join('')}</ul>` // push 로 넣은 부분을 join으로 합치는 부분
               }if(page<maxPage){// 만약 현재 페이지가 최대 페이지 보다 작으면 추가로 페이지가 1씩 늘어나게 하는 부분.

@@ -1,0 +1,58 @@
+@startuml
+!define RECTANGLE color #DDDDDD
+
+package "사용자 관리 모듈" as UM {
+  class "사용자관리" {
+    + createUser(사용자이름: String, 비밀번호: String): User
+    + login(사용자이름: String, 비밀번호: String): User
+    + logout(): void
+    + updateUserInfo(사용자ID: String, 새로운정보: Map<String, Object>): User
+    + getUserInfo(사용자ID: String): User
+  }
+}
+
+package "퀴즈 관리 모듈" as QM {
+  class "퀴즈관리" {
+    + generateQuiz(카테고리: String, 문제수: int): Quiz
+    + submitQuiz(사용자ID: String, 퀴즈ID: String, 정답들: List<String>): Result
+    + getQuizResults(사용자ID: String, 퀴즈ID: String): Result
+  }
+}
+
+package "데이터베이스 모듈" as DB {
+  class "데이터베이스" {
+    + saveUser(사용자: User): void
+    + getUser(사용자ID: String): User
+    + saveQuiz(퀴즈: Quiz): void
+    + getQuiz(퀴즈ID: String): Quiz
+    + saveResults(사용자ID: String, 퀴즈ID: String, 결과: Result): void
+    + getResults(사용자ID: String, 퀴즈ID: String): Result
+  }
+}
+
+package "TMDB API 통신 모듈" as TMDB {
+  class "TMDBAPI" {
+    + fetchMoviesByCategory(카테고리: String): List<Movie>
+    + fetchMovieDetails(영화ID: String): Movie
+    + searchMovies(검색어: String): List<Movie>
+  }
+}
+
+package "UI 모듈" as UI {
+  class "로그인컴포넌트"
+  class "퀴즈컴포넌트"
+  class "결과컴포넌트"
+  class "리더보드컴포넌트"
+}
+
+UI -[hidden]-> UM
+UI -[hidden]-> QM
+UI -[hidden]-> DB
+UI -[hidden]-> TMDB
+
+UI --> UM: 상호작용함
+UI --> QM: 상호작용함
+QM --> TMDB: 데이터 가져옴
+QM --> DB: 데이터 저장 및 가져옴
+UM --> DB: 데이터 저장 및 가져옴
+@enduml
